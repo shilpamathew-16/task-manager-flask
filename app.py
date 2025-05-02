@@ -123,12 +123,20 @@ def profile():
 
     return render_template("profile.html", username=username, task_count=task_count)
 
-
-import os
+def init_tasks_table():
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+    c.execute('''CREATE TABLE IF NOT EXISTS tasks (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    user_id INTEGER,
+                    content TEXT)''')
+    conn.commit()
+    conn.close()
 
 if __name__ == '__main__':
     init_db()
-    init_tasks_table()
+    init_tasks_table()  # <- this will now work
     port = int(os.environ.get('PORT', 5000))
     app.run(debug=False, host='0.0.0.0', port=port)
+
 
