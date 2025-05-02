@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+    <h2>Your Tasks</h2>
+    <p><a href="/profile">View Profile</a> | <a href="/logout">Logout</a></p>
+
+
+    <form action="/add" method="post">
+        <input name="task" placeholder="New Task" required>
+        <button type="submit">Add Task</button>
+    </form>
+
+    <ul>
+        {% for task in tasks %}
+        <li>
+            <form action="/edit/{{ task[0] }}" method="post" style="display:inline;">
+                <input type="text" name="updated_task" value="{{ task[1] }}" required>
+                <button type="submit">Update</button>
+            </form>
+            <a href="/delete/{{ task[0] }}">[Delete]</a>
+        </li>
+        {% endfor %}
+    </ul>
+    
+
+    <p><a href="/logout">Logout</a></p>
+</body>
+</html>
